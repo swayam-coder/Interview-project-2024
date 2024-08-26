@@ -4,8 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { appendSearchParams } from '../util';
 
 function Search(props) {
-  const { onSearch } = props;
-  return <input onChange={(e) => onSearch('search', e.target.value)} />;
+  const { onSearch, value } = props;
+  return <input value={value ?? ''} onChange={(e) => onSearch('search', e.target.value)} />;
 }
 
 function Tile(props) {
@@ -76,7 +76,7 @@ export default function Product() {
   return (
     <>
       <div className="search">
-        <Search onSearch={appendQueryParam} />
+        <Search onSearch={appendQueryParam} value={searchString} />
       </div>
       <div className="products">
         {filteredProducts?.length ? (
