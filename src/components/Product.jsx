@@ -73,10 +73,16 @@ export default function Product() {
     selectedCategory
   );
 
+  const clearSearch = () => {
+    const params = appendSearchParams(location.search, 'search', undefined)
+    navigate(`${location.pathname}?${params.toString()}`);
+  }
+
   return (
     <>
       <div className="search">
         <Search onSearch={appendQueryParam} value={searchString} />
+        <button style={{ marginLeft: 8 }} onClick={clearSearch}>Clear Search</button>
       </div>
       <div className="products">
         {filteredProducts?.length ? (

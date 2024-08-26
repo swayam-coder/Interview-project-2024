@@ -4,7 +4,8 @@ import Product from './components/Product';
 import { fetchCategories } from './reducers/category-slice';
 import { fetchProducts } from './reducers/product-slice';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { appendSearchParams } from './util';
 
 /**
  * Functional Requirement - 
@@ -24,16 +25,22 @@ Technical Requirement
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(fetchProducts());
   }, []);
 
+  const clearSelectedCategory = () => {
+    const params = appendSearchParams(location.search, 'category', undefined)
+    navigate(`${location.pathname}?${params.toString()}`);
+  }
+
   return (
     <div className="container">
       <div className="panel left-panel">
-        <button onClick={() => navigate('/')}>Clear filter</button>
+        <button onClick={clearSelectedCategory}>Clear filters</button>
         <Category />
       </div>
       <div className="vertical-divider" />
